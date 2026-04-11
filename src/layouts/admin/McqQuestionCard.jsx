@@ -7,6 +7,7 @@ function McqQuestionCard({ question }) {
         { label: "C", text: "Rajshahi", correct: false },
         { label: "D", text: "Barishal", correct: false },
     ];
+    console.log(question)
 
     return (
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -23,14 +24,14 @@ function McqQuestionCard({ question }) {
             {/* Body */}
             <div className="px-5 pt-5 pb-2">
                 <p className="text-sm font-semibold text-gray-900 mb-4">
-                    What is the Capital of Bangladesh?
+                    {question.questionText}
                 </p>
 
                 <div className="flex flex-col gap-2">
-                    {options.map((opt) => (
+                    {question.options.map((opt) => (
                         <div
                             key={opt.label}
-                            className={`flex items-center justify-between rounded-lg px-4 py-3 ${opt.correct
+                            className={`flex items-center justify-between rounded-lg px-4 py-3 ${opt.isCorrect
                                 ? "bg-gray-100 border border-gray-200"
                                 : ""
                                 }`}
@@ -38,7 +39,7 @@ function McqQuestionCard({ question }) {
                             <span className="text-sm text-gray-800">
                                 {opt.label}. {opt.text}
                             </span>
-                            {opt.correct && (
+                            {opt.isCorrect && (
                                 <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
                                     <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="none">
                                         <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
