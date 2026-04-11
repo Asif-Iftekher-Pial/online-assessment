@@ -2,7 +2,7 @@ import React from 'react'
 import { GrSearchAdvanced } from "react-icons/gr";
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
-function AdminHeader() {
+function AdminHeader({ searchQuery, onSearchChange }) {
     return (
         <div className='flex justify-between mx-15 mt-10 items-center'>
             <div>
@@ -17,6 +17,8 @@ function AdminHeader() {
                     }}>
                         <input
                             type="text"
+                            value={searchQuery}
+                            onChange={(e) => onSearchChange(e.target.value)}
                             className='w-full h-12 rounded-lg py-2 px-3 bg-white outline-none'
                             placeholder='Search by exam title'
                         />
