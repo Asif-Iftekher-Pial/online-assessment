@@ -8,7 +8,7 @@ function AdminDashboardView() {
         <div className='bg-gray-100 min-h-screen flex flex-col overflow-hidden'>
 
             {/* header */}
-            <Header />
+            <Header  isLogin={''}/>
 
             {/* main */}
             <main className='flex-1 h-full flex flex-col'>

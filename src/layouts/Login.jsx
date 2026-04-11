@@ -35,7 +35,7 @@ function Login() {
     return (
         <>
             <div className='bg-gray-100 min-h-screen flex flex-col overflow-hidden'>
-                <Header />
+                <Header isLogin={'login'} />
                 {/* content */}
                 <main className='flex-1 h-full flex flex-col'>
                     <div className='flex-1 flex flex-col items-center justify-center '>

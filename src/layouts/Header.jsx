@@ -4,7 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header({ isLogin }) {
     const { user } = useAuth();
     return (
         <div className='h-20 flex bg-white shadow-md px-15'>
@@ -16,26 +16,37 @@ function Header() {
             </div>
 
             {/* Nav */}
-            <div className='flex flex-1 items-center justify-between px-8'>
-                <div className=' font-normal text-base leading-[1.4] tracking-normal text-center'>
-                    Dashboard
-                </div>
-                <div className='flex'>
-                    {/* img */}
-                    <div className='h-10 w-10 rounded-full flex justify-center items-center bg-[#F6F6F6]'>
-                        <FaUser className='h-6 w-6' style={{ color: '#D6D6D6' }} />
+            {
+                isLogin !== 'login' && <div className='flex flex-1 items-center justify-between px-8'>
+                    <div className=' font-normal text-base leading-[1.4] tracking-normal text-center'>
+                        Dashboard
                     </div>
-                    <div className='flex flex-col'>
+                    <div className='flex'>
+                        {/* img */}
+                        <div className='h-10 w-10 rounded-full flex justify-center items-center bg-[#F6F6F6]'>
+                            <FaUser className='h-6 w-6' style={{ color: '#D6D6D6' }} />
+                        </div>
+                        <div className='flex flex-col'>
 
-                        <div className='font-semibold text-sm leading-[1.4] tracking-normal'>
-                            {user?.email}
-                        </div>
-                        <div className='font-medium text-xs tracking-normal text-[#64748B]'>
-                            ID : {user?.id}
+                            <div className='font-semibold text-sm leading-[1.4] tracking-normal'>
+                                {user?.email}
+                            </div>
+                            <div className='font-medium text-xs tracking-normal text-[#64748B]'>
+                                ID : {user?.id}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+
+            {
+                isLogin === 'login' && <div className='flex flex-1 items-center justify-center'>
+                    <p className='font-semibold text-2xl leading-[130%] tracking-normal text-center mr-30'>Akij Resource</p>
+                </div>
+            }
+
+
+
         </div>
     )
 }
