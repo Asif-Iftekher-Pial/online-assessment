@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Track from './Track';
 import Modal from '../../components/Modal';
 import McqQuestionForm from './McqQuestionForm';
+import McqQuestionCard from './McqQuestionCard';
 function CreateOnlineTest() {
     let information = {
         title: "",
@@ -105,7 +106,20 @@ function CreateOnlineTest() {
                     setQuestionData(prev => [...prev, data]);
                 }} ref={mcqFormRef} />
             </Modal>
+            <div className='flex flex-col justify-center items-center mt-5'>
+                {
+                    questionData.length > 0 &&
+                    questionData.map((question, index) => (
+                        <div className='w-238.5 mt-5' key={index}>
+                            <McqQuestionCard question={question} />
+                        </div>
+                    ))
 
+                }
+
+
+
+            </div>
             <div className='bg-[#FFFFFF] mx-50  mt-5 p-5 rounded-2xl border border-[#D1D5DB] mb-5'>
                 {confirmButtons && <div className='flex justify-between'>
                     <div>
@@ -119,7 +133,8 @@ function CreateOnlineTest() {
                         </button>
                     </div>
                 </div>}
-                {addQuestionAddButton && <button onClick={() => setShowModal(true)} className='w-full bg-[#6633FF] p-4 rounded-2xl text-white  cursor-pointer'>Add Question</button>}
+                {addQuestionAddButton && <button onClick={() => setShowModal(true)}
+                    className='w-full bg-[#6633FF] p-4 rounded-2xl text-white  cursor-pointer'>Add Question</button>}
             </div>
         </div>
     )
