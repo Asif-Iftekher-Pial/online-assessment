@@ -1,6 +1,6 @@
 import React from 'react'
 
-function McqQuestionCard({ question }) {
+function McqQuestionCard({ question, removeQuestionFromTest }) {
     const options = [
         { label: "A", text: "Dhaka", correct: true },
         { label: "B", text: "Chattogram", correct: false },
@@ -56,7 +56,7 @@ function McqQuestionCard({ question }) {
                 <button className="text-sm font-medium text-indigo-500 hover:text-indigo-700">
                     Edit
                 </button>
-                <button className="text-sm font-medium text-red-500 hover:text-red-700">
+                <button onClick={() => { removeQuestionFromTest(question.questionText)}} className="text-sm font-medium text-red-500 hover:text-red-700">
                     Remove From Exam
                 </button>
             </div>

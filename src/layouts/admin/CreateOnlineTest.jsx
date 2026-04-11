@@ -81,6 +81,9 @@ function CreateOnlineTest() {
             localStorage.setItem('onlineTests', JSON.stringify(questionSet));
         }
     }
+    const removeQuestionFromTest = (questionTitle) => {
+        setQuestionData(prev => prev.filter(q => q.questionText !== questionTitle))
+    }
     useEffect(() => {
         console.log('info:', info)
         console.log('All Questions:', questionData)
@@ -111,7 +114,7 @@ function CreateOnlineTest() {
                     questionData.length > 0 &&
                     questionData.map((question, index) => (
                         <div className='w-238.5 mt-5' key={index}>
-                            <McqQuestionCard question={question} />
+                            <McqQuestionCard question={question} removeQuestionFromTest={removeQuestionFromTest} />
                         </div>
                     ))
 
