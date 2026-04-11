@@ -37,7 +37,7 @@ function McqQuestionCard({ question, removeQuestionFromTest }) {
                                 }`}
                         >
                             <span className="text-sm text-gray-800">
-                                {opt.label}. {opt.text}
+                                 {opt.text}
                             </span>
                             {opt.isCorrect && (
                                 <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
