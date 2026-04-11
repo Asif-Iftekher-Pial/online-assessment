@@ -14,10 +14,10 @@ function McqQuestionCard({ question }) {
 
             {/* Header */}
             <div className="flex justify-between items-center px-5 py-3 border-b border-gray-200">
-                <span className="text-sm font-medium text-gray-800">Question 1</span>
+                <span className="text-sm font-medium text-gray-800">Question {question.id}</span>
                 <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500 border border-gray-300 rounded-full px-3 py-1">MCQ</span>
-                    <span className="text-xs text-gray-500 border border-gray-300 rounded-full px-3 py-1">1 pt</span>
+                    <span className="text-xs text-gray-500 border border-gray-300 rounded-full px-3 py-1">{question.questionType}</span>
+                    <span className="text-xs text-gray-500 border border-gray-300 rounded-full px-3 py-1">{question.score} pt</span>
                 </div>
             </div>
 
