@@ -41,7 +41,7 @@ function Header({ isLogin }) {
 
             {
                 isLogin === 'login' && <div className='flex flex-1 items-center justify-center'>
-                    <p className='font-semibold text-2xl leading-[130%] tracking-normal text-center mr-30'>Akij Resource</p>
+                    <p className='font-semibold text-xl lg:text-2xl leading-[130%] tracking-normal text-center lg:mr-30'>Akij Resource</p>
                 </div>
             }
 

@@ -1,8 +1,11 @@
 import React from 'react'
 import { GrSearchAdvanced } from "react-icons/gr";
 import Button from '../../components/Button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 function AdminHeader({ searchQuery, onSearchChange }) {
+    // get current route path
+    const location = useLocation();
+    const currentPath = location.pathname;
     return (
         <div className='flex justify-between mx-15 mt-10 items-center'>
             <div>
@@ -28,11 +31,17 @@ function AdminHeader({ searchQuery, onSearchChange }) {
                     </div>
                 </div>
             </div>
-            <div>
-                <Link to="/admin/create-online-test">
-                    <Button title={"Create online text"} outlined={false} />
-                </Link>
-            </div>
+            {
+                currentPath === '/admin/dashboard' ? (
+                    <div>
+                        <Link to="/admin/create-online-test">
+                            <Button title={"Create online text"} outlined={false} />
+                        </Link>
+                    </div>
+                ) : (
+                    <div></div>
+                )
+            }
         </div>
     )
 }

@@ -10,6 +10,7 @@ import McqQuestionForm from './McqQuestionForm';
 import McqQuestionCard from './McqQuestionCard';
 function CreateOnlineTest() {
     let information = {
+        id: crypto.randomUUID(),
         title: "",
         totalCandidates: null,
         totalSlots: null,
@@ -21,7 +22,7 @@ function CreateOnlineTest() {
 
     }
     const [activeTab, setActiveTab] = useState('create');
-    const [info, setInfo] = useState([{ ...information, id: 1 }]);
+    const [info, setInfo] = useState([{ ...information }]);
     const [addQuestionAddButton, setAddQuestionAddButton] = useState(false);
     const [confirmButtons, setConfirmButtons] = useState(true)
     const [showModal, setShowModal] = useState(false);
@@ -50,37 +51,59 @@ function CreateOnlineTest() {
             idx === 0 ? { ...item, [field]: value } : item  // update first item
         ))
     }
-    // when user what to create another test, we need to reset the form and question data and start fresh test information and icrement the id for next test information
+    // when user what to create another test, we need to reset the form and question data and start fresh test information and the id for next test information
     const addNewInfo = () => {
         setInfo(prev => [
             ...prev,
-            { ...information, id: prev.length + 1 }
+            { ...information, id: crypto.randomUUID() }
         ])
     }
     const makeQuestionForExam = () => {
-        if (info.length === 1 && info[0].title === "" && info[0].totalCandidates === null && info[0].totalSlots === null && info[0].totalQuestionSet === null && info[0].startTime === "" && info[0].endTime === "" && info[0].duration === null && info[0].questionType === '') {
-
+        if (
+            info.length >= 1 &&
+            info[0].title === "" &&
+            info[0].totalCandidates === null &&
+            info[0].totalSlots === null &&
+            info[0].totalQuestionSet === null &&
+            info[0].startTime === "" &&
+            info[0].endTime === "" &&
+            info[0].duration === null &&
+            info[0].questionType === ''
+        ) {
             return;
         }
 
-        let questionSet = info.map(infoItem => {
-            return {
-                ...infoItem,
-                questions: questionData
-            }
-        })
-        console.log(questionSet)
-        // first check if localstorage already have onlineTest data if have then get the data and parse it and add new questionSet to that data and set it to localstorage otherwise set questionSet to localstorage
+        const questionSet = info.map(infoItem => ({
+            ...infoItem,
+            questions: questionData
+        }));
+
         const storedTests = localStorage.getItem('onlineTests');
+
         if (storedTests) {
             const parsedTests = JSON.parse(storedTests);
-            const updatedTests = [...parsedTests, ...questionSet];
-            localStorage.setItem('onlineTests', JSON.stringify(updatedTests));
-            return updatedTests;
+
+            const updatedTests = parsedTests.map(test => {
+                const found = questionSet.find(q => q.id === test.id);
+
+                // ✅ update existing test
+                return found ? found : test;
+            });
+
+            // ✅ if not found, add new
+            const newTests = questionSet.filter(
+                q => !parsedTests.some(test => test.id === q.id)
+            );
+
+            const finalData = [...updatedTests, ...newTests];
+
+            localStorage.setItem('onlineTests', JSON.stringify(finalData));
+            return finalData;
+
         } else {
             localStorage.setItem('onlineTests', JSON.stringify(questionSet));
         }
-    }
+    };
     const removeQuestionFromTest = (questionTitle) => {
         setQuestionData(prev => prev.filter(q => q.questionText !== questionTitle))
     }
@@ -95,7 +118,7 @@ function CreateOnlineTest() {
             <Track activeTab={activeTab} />
 
             {/* basic information */}
-            {activeTab === 'create' && <BasicInformation info={info[0]} updateInfo={updateInfo} />}
+            {activeTab === 'create' && <BasicInformation info={info} updateInfo={updateInfo} />}
 
             {/* basic information detail */}
             {activeTab === 'detail' && <BasicInformationCardDetail info={info.at(-1)} goBack={goBack} />}

@@ -20,17 +20,24 @@ function Login() {
             email: "abc@gmail.com",
             password: "123456",
         }
+        const candidateData = {
+            email: 'can@gmail.com',
+            password: '123'
+        }
         if (email === "" || password === "") {
             alert("Please enter email and password");
             return;
         }
         if (email !== authData.email || password !== authData.password) {
-            alert("Wrong!! use abc@gmail.com and 123456 for login");
-            return;
+            if (email !== candidateData.email || password !== candidateData.password) {
+                alert("Wrong!! use abc@gmail.com and 123456 for login or can@gmail.com and 123 for candidate login");
+                return;
+            }
         }
-        login(authData);
-        localStorage.setItem("auth", JSON.stringify(authData));
-        navigate("/admin/dashboard");
+        login(email === authData.email ? authData : candidateData);
+        localStorage.setItem("auth", JSON.stringify(email === authData.email ? authData : candidateData));
+        localStorage.setItem("isCandidate", JSON.stringify(email === candidateData.email));
+        navigate(email === authData.email ? "/admin/dashboard" : "/candidate/dashboard");
     }
     return (
         <>
@@ -42,7 +49,7 @@ function Login() {
                         <div className='mb-5'>
                             <h1 className='font-semibold text-2xl leading-[1.3] tracking-normal text-center align-middle'>Sign In</h1>
                         </div>
-                        <div className='w-142.75 opacity-100 gap-2.5 rounded-2xl pt-8 px-8 pb-10 border border-[#E0E0E0] bg-white'>
+                        <div className=' w-85.75 lg:w-142.75 opacity-100 gap-2.5 rounded-2xl pt-8 px-8 pb-10 border border-[#E0E0E0] bg-white'>
                             <div className=''>
                                 <div className='mb-10'>
 
