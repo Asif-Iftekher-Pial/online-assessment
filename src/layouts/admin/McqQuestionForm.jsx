@@ -3,10 +3,11 @@ import { useState } from 'react'
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D', 'E', 'F']
 
-const McqQuestionForm = forwardRef(({ questionNumber = 1, onSave }, ref) => {
+const McqQuestionForm = forwardRef(({onSave}, ref) => {
     const [score, setScore] = useState(1)
     const [questionType, setQuestionType] = useState('Checkbox')
     const [questionText, setQuestionText] = useState('')
+    const [questionNumber, setQuestionNumber] = useState(Math.floor(Math.random() * 100000))  // unique id for question
     const [options, setOptions] = useState([
         { id: 1, text: '', isCorrect: false },
         { id: 2, text: '', isCorrect: false },

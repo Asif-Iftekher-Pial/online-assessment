@@ -10,7 +10,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function ExamCard({ info }) {
     const navigate = useNavigate();
     const isCandidate = JSON.parse(localStorage.getItem("isCandidate"));
-    const startExam = (exam_id) => { console.log(exam_id)
+    const startExam = (exam_id) => { 
+        console.log(exam_id)
         if (isCandidate) {
             navigate(`/candidate/exam-room/${exam_id}`)
         }
@@ -28,7 +29,7 @@ function ExamCard({ info }) {
                                 (
                                     <>
                                         <FaRegClock className='mr-2 text-[#9CA3AF] w-6 h-6 opacity-100' />
-                                        <p className='text-[#64748B]'>Duration : <span className='text-black'>20 mins</span></p>
+                                        <p className='text-[#64748B]'>Duration : <span className='text-black'>{info.duration}    mins</span></p>
                                     </>
                                 )
                                 :
