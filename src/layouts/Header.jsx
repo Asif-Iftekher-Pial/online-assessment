@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 
 function Header({ isLogin }) {
     const { user } = useAuth();
+    const isCandidate = JSON.parse(localStorage.getItem("isCandidate"));
     return (
         <div className='h-20 flex bg-white shadow-md px-15'>
             {/* Logo */}
             <div className='flex items-center'>
-                <Link to={"/admin/dashboard"}>
+                <Link to={ isCandidate ? "/candidate/dashboard" : "/admin/dashboard" }>
                     <img src={Resource_logo} alt="Resource Logo" />
                 </Link>
             </div>

@@ -11,7 +11,6 @@ function ExamCard({ info }) {
     const navigate = useNavigate();
     const isCandidate = JSON.parse(localStorage.getItem("isCandidate"));
     const startExam = (exam_id) => { 
-        console.log(exam_id)
         if (isCandidate) {
             navigate(`/candidate/exam-room/${exam_id}`)
         }

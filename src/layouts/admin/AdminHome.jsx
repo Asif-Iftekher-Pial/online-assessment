@@ -5,6 +5,7 @@ import { FaLessThan } from "react-icons/fa";
 import { FaGreaterThan } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import group from '../../assets/Group.svg'
+import defaultTest from '../../../data.json'
 function AdminHome() {
     // check if onlineTest exam data is stored in locastorage or not if store then get the data from locastorage and parse it and set it to state otherwise set empty array to state
     const [onlineTests, setOnlineTests] = useState([]);
@@ -19,6 +20,9 @@ function AdminHome() {
         const storedTests = localStorage.getItem('onlineTests');
         if (storedTests) {
             setOnlineTests(JSON.parse(storedTests));
+        } else {
+            localStorage.setItem('onlineTests', JSON.stringify(defaultTest));
+            setOnlineTests(defaultTest);
         }
     }, []);
 

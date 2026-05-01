@@ -108,8 +108,6 @@ function CreateOnlineTest() {
         setQuestionData(prev => prev.filter(q => q.questionText !== questionTitle))
     }
     useEffect(() => {
-        console.log('info:', info)
-        console.log('All Questions:', questionData)
         makeQuestionForExam()
     }, [questionData])
     return (

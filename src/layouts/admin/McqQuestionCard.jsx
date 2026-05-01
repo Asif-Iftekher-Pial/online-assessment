@@ -7,8 +7,6 @@ function McqQuestionCard({ question, removeQuestionFromTest }) {
         { label: "C", text: "Rajshahi", correct: false },
         { label: "D", text: "Barishal", correct: false },
     ];
-    console.log(question)
-
     return (
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
 
