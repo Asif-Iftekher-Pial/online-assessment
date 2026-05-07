@@ -5,6 +5,8 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoIosEyeOff } from "react-icons/io";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginToStore } from '../redux/features/auth/authSlice';
 
 function Login() {
     const [show, setShow] = useState(false);
@@ -15,12 +17,15 @@ function Login() {
     const togglePassword = () => {
         setShow(!show);
     }
+    const dispatch = useDispatch();
     const userLogin = () => {
         const authData = {
+            id: Math.floor(Math.random() * 1000),
             email: "abc@gmail.com",
             password: "123456",
         }
         const candidateData = {
+            id: Math.floor(Math.random() * 1000),
             email: 'can@gmail.com',
             password: '123'
         }
@@ -35,6 +40,7 @@ function Login() {
             }
         }
         login(email === authData.email ? authData : candidateData);
+        dispatch(loginToStore({ user: email === authData.email ? authData : candidateData, token: "sample-token" }));
         localStorage.setItem("auth", JSON.stringify(email === authData.email ? authData : candidateData));
         localStorage.setItem("isCandidate", JSON.stringify(email === candidateData.email));
         navigate(email === authData.email ? "/admin/dashboard" : "/candidate/dashboard");
