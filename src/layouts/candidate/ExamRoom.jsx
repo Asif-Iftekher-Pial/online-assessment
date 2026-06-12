@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { AnswarePaper } from '../../composables/AnswarePaper';
 import ExamFinishedNotice from './ExamFinishedNotice';
 import ExamTimeOverNotice from './ExamTimeOverNotice';
+import Result from './Result';
 
 
 function ExamRoom() {
@@ -13,7 +14,8 @@ function ExamRoom() {
 
     const questionData = localStorage.getItem('onlineTests') ? JSON.parse(localStorage.getItem('onlineTests')) : null;
     const question = questionData ? questionData.find(test => test.id === id) : null;
-
+    const [examEnded, setExamEnded] = useState(false);
+    const [showResult, setShowResult] = useState(false);
     const handleSaveAndContinue = () => {
         setQuestionNumber(questionNumber + 1);
 
@@ -42,22 +44,30 @@ function ExamRoom() {
         return q.selectedOptions;
     };
     const selected = getSelectedAnswer(id, currentQuestion?.questionNumber);
+    const showExamResult = () => {
+        setShowResult(true);
+        setExamEnded(true)
+        localStorage.removeItem('examStartTime');
+        localStorage.removeItem('answers');
+    }
 
     const [timeLeft, setTimeLeft] = useState(examTimeOut - currentTime);
 
     useEffect(() => {
+        if (examEnded) return;
         const interval = setInterval(() => {
             const now = Date.now();
             const remainingTime = Math.max(examTimeOut - now, 0);
             setTimeLeft(remainingTime);
         }, 1000);
         return () => clearInterval(interval);
-    }, [examTimeOut]);
+    }, [examTimeOut, examEnded]);
 
     return (
         <div className='flex flex-col  py-5  justify-center items-center '>
+            {showResult && <Result answers={answers} showResult={showResult} setShowResult={setShowResult} />}
 
-            {timeLeft <= 0 &&
+            {timeLeft <= 0 && !showResult &&
 
                 <ExamTimeOverNotice showNotice={true} />
             }
@@ -73,9 +83,14 @@ function ExamRoom() {
                                 <span className='font-semibold text-sm'>Question ({questionNumber + 1} of {question.questions.length})</span>
                             </div>
                             <div className='ml-8'>
-                                <div className='w-42 lg:w-55 bg-gray-200 flex justify-center items-center rounded-lg px-4 py-3 '>
-                                    <p>{Math.floor((timeLeft / 1000) / 60).toString().padStart(2, '0')}:{Math.floor((timeLeft / 1000) % 60).toString().padStart(2, '0')} left</p>
-                                </div>
+                                {
+                                    !showResult && (
+                                        <div className='w-42 lg:w-55 bg-gray-200 flex justify-center items-center rounded-lg px-4 py-3 '>
+                                            <p>{Math.floor((timeLeft / 1000) / 60).toString().padStart(2, '0')}:{Math.floor((timeLeft / 1000) % 60).toString().padStart(2, '0')} left</p>
+                                        </div>
+                                    )
+                                }
+
                             </div>
                         </div>
                         <div className='bg-white w-85.75 lg:w-212.25 rounded-2xl mt-5'>
@@ -110,7 +125,7 @@ function ExamRoom() {
                                     <div>
                                         {
                                             questionNumber === question.questions.length - 1 ? (
-                                                <button
+                                                <button onClick={showExamResult}
                                                     className='bg-[#6633FF] cursor-pointer hover:bg-blue-600 w-full text-white font-medium py-2 px-4 rounded-lg'>
                                                     Done
                                                 </button>

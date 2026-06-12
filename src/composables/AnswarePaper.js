@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export function AnswarePaper() {
   const [questionNumber, setQuestionNumber] = useState(0);
-  const {user} = JSON.parse(localStorage.getItem('user')) || {user: null};
+  const { user } = JSON.parse(localStorage.getItem("user")) || { user: null };
 
   const [answers, setAnswers] = useState([]);
   /**
@@ -76,8 +76,8 @@ export function AnswarePaper() {
       }
     });
   };
+
   const skipQuestion = (exam, currentQuestion) => {
-    
     if (currentQuestion.questionType === "Radio") {
       setAnswers((prev) => {
         const alreadyAnsweredSet = [...prev];
@@ -89,7 +89,7 @@ export function AnswarePaper() {
               (item) => item.questionId === currentQuestion.questionNumber,
             )
           : null;
-       
+
         // if first question want to skip and there is no exam and question in the state, then push new one with null answer
         if (answers.length === 0) {
           alreadyAnsweredSet.push({
@@ -104,7 +104,7 @@ export function AnswarePaper() {
           });
         } else if (findGivingExam && findGivingQuestion) {
           findGivingQuestion.selectedOptions = null;
-        }else if (findGivingExam && findGivingQuestion === undefined) {
+        } else if (findGivingExam && findGivingQuestion === undefined) {
           findGivingExam.answers.push({
             questionId: currentQuestion.questionNumber,
             selectedOptions: null,
@@ -124,7 +124,7 @@ export function AnswarePaper() {
               (item) => item.questionId === currentQuestion.questionNumber,
             )
           : null;
-       
+
         // if first question want to skip and there is no exam and question in the state, then push new one with null answer
         if (answers.length === 0) {
           alreadyAnsweredSet.push({
@@ -142,13 +142,11 @@ export function AnswarePaper() {
             questionId: currentQuestion.questionNumber,
             selectedOptions: [],
           });
-        }
-        else if (findGivingExam && findGivingQuestion) {
+        } else if (findGivingExam && findGivingQuestion) {
           findGivingQuestion.selectedOptions = [];
         }
         return alreadyAnsweredSet;
       });
-
     }
 
     setQuestionNumber((prev) => prev + 1);

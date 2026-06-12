@@ -24,7 +24,7 @@ function Modal({ title, onClose, children, size, show, handleSave, hideFooter })
                 {/* Header */}
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-semibold">{title}</h2>
-                    <button onClick={onClose}>✕</button>
+                    <button className='cursor-pointer' onClick={onClose}>✕</button>
                 </div>
 
                 {/* Body */}
